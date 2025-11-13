@@ -1,0 +1,201 @@
+(cs272env) user1@LAPTOP-35REI65J:~/cs272/highway-env$ python dqn_train.py 
+/home/user1/miniconda3/envs/cs272env/lib/python3.13/site-packages/gymnasium/envs/registration.py:512: DeprecationWarning: WARN: The environment intersection-v0 is out of date. You should consider upgrading to version `v1`.
+  logger.deprecation(
+Using cuda device
+Wrapping the env with a `Monitor` wrapper
+Wrapping the env in a DummyVecEnv.
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 9.26     |
+|    ep_rew_mean      | 2.41     |
+|    exploration_rate | 0.12     |
+| time/               |          |
+|    episodes         | 50       |
+|    fps              | 20       |
+|    time_elapsed     | 22       |
+|    total_timesteps  | 463      |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.403    |
+|    n_updates        | 90       |
+----------------------------------
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 8.52     |
+|    ep_rew_mean      | 3.11     |
+|    exploration_rate | 0.05     |
+| time/               |          |
+|    episodes         | 100      |
+|    fps              | 21       |
+|    time_elapsed     | 39       |
+|    total_timesteps  | 852      |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.704    |
+|    n_updates        | 187      |
+----------------------------------
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 7.9      |
+|    ep_rew_mean      | 4.52     |
+|    exploration_rate | 0.05     |
+| time/               |          |
+|    episodes         | 150      |
+|    fps              | 21       |
+|    time_elapsed     | 58       |
+|    total_timesteps  | 1253     |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.376    |
+|    n_updates        | 288      |
+----------------------------------
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 7.62     |
+|    ep_rew_mean      | 4.21     |
+|    exploration_rate | 0.05     |
+| time/               |          |
+|    episodes         | 200      |
+|    fps              | 21       |
+|    time_elapsed     | 75       |
+|    total_timesteps  | 1614     |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.381    |
+|    n_updates        | 378      |
+----------------------------------
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 6.97     |
+|    ep_rew_mean      | 3.17     |
+|    exploration_rate | 0.05     |
+| time/               |          |
+|    episodes         | 250      |
+|    fps              | 20       |
+|    time_elapsed     | 92       |
+|    total_timesteps  | 1950     |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.329    |
+|    n_updates        | 462      |
+----------------------------------
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 6.87     |
+|    ep_rew_mean      | 3.19     |
+|    exploration_rate | 0.05     |
+| time/               |          |
+|    episodes         | 300      |
+|    fps              | 20       |
+|    time_elapsed     | 110      |
+|    total_timesteps  | 2301     |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.506    |
+|    n_updates        | 550      |
+----------------------------------
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 6.88     |
+|    ep_rew_mean      | 2.84     |
+|    exploration_rate | 0.05     |
+| time/               |          |
+|    episodes         | 350      |
+|    fps              | 21       |
+|    time_elapsed     | 125      |
+|    total_timesteps  | 2638     |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.467    |
+|    n_updates        | 634      |
+----------------------------------
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 6.83     |
+|    ep_rew_mean      | 2.82     |
+|    exploration_rate | 0.05     |
+| time/               |          |
+|    episodes         | 400      |
+|    fps              | 20       |
+|    time_elapsed     | 142      |
+|    total_timesteps  | 2984     |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.728    |
+|    n_updates        | 720      |
+----------------------------------
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 7.1      |
+|    ep_rew_mean      | 3.49     |
+|    exploration_rate | 0.05     |
+| time/               |          |
+|    episodes         | 450      |
+|    fps              | 21       |
+|    time_elapsed     | 158      |
+|    total_timesteps  | 3348     |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.175    |
+|    n_updates        | 811      |
+----------------------------------
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 7.24     |
+|    ep_rew_mean      | 3.62     |
+|    exploration_rate | 0.05     |
+| time/               |          |
+|    episodes         | 500      |
+|    fps              | 21       |
+|    time_elapsed     | 175      |
+|    total_timesteps  | 3708     |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.178    |
+|    n_updates        | 901      |
+----------------------------------
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 7.13     |
+|    ep_rew_mean      | 3.46     |
+|    exploration_rate | 0.05     |
+| time/               |          |
+|    episodes         | 550      |
+|    fps              | 21       |
+|    time_elapsed     | 192      |
+|    total_timesteps  | 4061     |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.213    |
+|    n_updates        | 990      |
+----------------------------------
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 7.13     |
+|    ep_rew_mean      | 3.63     |
+|    exploration_rate | 0.05     |
+| time/               |          |
+|    episodes         | 600      |
+|    fps              | 21       |
+|    time_elapsed     | 208      |
+|    total_timesteps  | 4421     |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.685    |
+|    n_updates        | 1080     |
+----------------------------------
+----------------------------------
+| rollout/            |          |
+|    ep_len_mean      | 7.28     |
+|    ep_rew_mean      | 3.9      |
+|    exploration_rate | 0.05     |
+| time/               |          |
+|    episodes         | 650      |
+|    fps              | 21       |
+|    time_elapsed     | 226      |
+|    total_timesteps  | 4789     |
+| train/              |          |
+|    learning_rate    | 0.0001   |
+|    loss             | 0.0187   |
+|    n_updates        | 1172     |
+----------------------------------

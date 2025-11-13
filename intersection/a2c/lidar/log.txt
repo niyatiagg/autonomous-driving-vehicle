@@ -1,0 +1,89 @@
+(cs272env) user1@LAPTOP-35REI65J:~/cs272/cs-272-final-project/intersection$ python a2c/lidar/a2c_train.py
+/home/user1/miniconda3/envs/cs272env/lib/python3.13/site-packages/gymnasium/envs/registration.py:512: DeprecationWarning: WARN: The environment intersection-v0 is out of date. You should consider upgrading to version `v1`.
+  logger.deprecation(
+Using cpu device
+------------------------------------
+| rollout/              |          |
+|    ep_len_mean        | 8.09     |
+|    ep_rew_mean        | 3.37     |
+| time/                 |          |
+|    fps                | 23       |
+|    iterations         | 50       |
+|    time_elapsed       | 41       |
+|    total_timesteps    | 1000     |
+| train/                |          |
+|    entropy_loss       | -0.676   |
+|    explained_variance | 0.113    |
+|    learning_rate      | 0.0007   |
+|    n_updates          | 49       |
+|    policy_loss        | -0.66    |
+|    value_loss         | 12.1     |
+------------------------------------
+------------------------------------
+| rollout/              |          |
+|    ep_len_mean        | 7.98     |
+|    ep_rew_mean        | 5.18     |
+| time/                 |          |
+|    fps                | 24       |
+|    iterations         | 100      |
+|    time_elapsed       | 82       |
+|    total_timesteps    | 2000     |
+| train/                |          |
+|    entropy_loss       | -0.522   |
+|    explained_variance | 0.0343   |
+|    learning_rate      | 0.0007   |
+|    n_updates          | 99       |
+|    policy_loss        | 0.848    |
+|    value_loss         | 6.39     |
+------------------------------------
+------------------------------------
+| rollout/              |          |
+|    ep_len_mean        | 7.39     |
+|    ep_rew_mean        | 4        |
+| time/                 |          |
+|    fps                | 24       |
+|    iterations         | 150      |
+|    time_elapsed       | 122      |
+|    total_timesteps    | 3000     |
+| train/                |          |
+|    entropy_loss       | -0.712   |
+|    explained_variance | 0.0694   |
+|    learning_rate      | 0.0007   |
+|    n_updates          | 149      |
+|    policy_loss        | 0.576    |
+|    value_loss         | 11.4     |
+------------------------------------
+------------------------------------
+| rollout/              |          |
+|    ep_len_mean        | 7.03     |
+|    ep_rew_mean        | 3.55     |
+| time/                 |          |
+|    fps                | 24       |
+|    iterations         | 200      |
+|    time_elapsed       | 162      |
+|    total_timesteps    | 4000     |
+| train/                |          |
+|    entropy_loss       | -0.696   |
+|    explained_variance | 0.165    |
+|    learning_rate      | 0.0007   |
+|    n_updates          | 199      |
+|    policy_loss        | 0.751    |
+|    value_loss         | 10       |
+------------------------------------
+------------------------------------
+| rollout/              |          |
+|    ep_len_mean        | 7.41     |
+|    ep_rew_mean        | 4.59     |
+| time/                 |          |
+|    fps                | 24       |
+|    iterations         | 250      |
+|    time_elapsed       | 202      |
+|    total_timesteps    | 5000     |
+| train/                |          |
+|    entropy_loss       | -0.722   |
+|    explained_variance | 0.157    |
+|    learning_rate      | 0.0007   |
+|    n_updates          | 249      |
+|    policy_loss        | 0.487    |
+|    value_loss         | 9.22     |
+------------------------------------

@@ -1,0 +1,98 @@
+(cs272env) user1@LAPTOP-35REI65J:~/cs272/cs-272-final-project/intersection/ppo/grayscale$ python ppo_train.py
+/home/user1/miniconda3/envs/cs272env/lib/python3.13/site-packages/gymnasium/envs/registration.py:512: DeprecationWarning: WARN: The environment intersection-v0 is out of date. You should consider upgrading to version `v1`.
+  logger.deprecation(
+Using cpu device
+---------------------------------
+| rollout/           |          |
+|    ep_len_mean     | 10.5     |
+|    ep_rew_mean     | 1.46     |
+| time/              |          |
+|    fps             | 23       |
+|    iterations      | 1        |
+|    time_elapsed    | 44       |
+|    total_timesteps | 1024     |
+---------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    ep_len_mean          | 9.07        |
+|    ep_rew_mean          | 1.63        |
+| time/                   |             |
+|    fps                  | 20          |
+|    iterations           | 2           |
+|    time_elapsed         | 99          |
+|    total_timesteps      | 2048        |
+| train/                  |             |
+|    approx_kl            | 0.013384192 |
+|    clip_fraction        | 0.216       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -1.09       |
+|    explained_variance   | 0.00903     |
+|    learning_rate        | 0.0003      |
+|    loss                 | 3.62        |
+|    n_updates            | 10          |
+|    policy_gradient_loss | -0.0182     |
+|    value_loss           | 7.93        |
+-----------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    ep_len_mean          | 8.34        |
+|    ep_rew_mean          | 2.08        |
+| time/                   |             |
+|    fps                  | 20          |
+|    iterations           | 3           |
+|    time_elapsed         | 152         |
+|    total_timesteps      | 3072        |
+| train/                  |             |
+|    approx_kl            | 0.012774685 |
+|    clip_fraction        | 0.157       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -1.05       |
+|    explained_variance   | 0.0273      |
+|    learning_rate        | 0.0003      |
+|    loss                 | 3.84        |
+|    n_updates            | 20          |
+|    policy_gradient_loss | -0.013      |
+|    value_loss           | 8.03        |
+-----------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    ep_len_mean          | 8.09        |
+|    ep_rew_mean          | 2.17        |
+| time/                   |             |
+|    fps                  | 20          |
+|    iterations           | 4           |
+|    time_elapsed         | 203         |
+|    total_timesteps      | 4096        |
+| train/                  |             |
+|    approx_kl            | 0.018129509 |
+|    clip_fraction        | 0.175       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -0.987      |
+|    explained_variance   | 0.0316      |
+|    learning_rate        | 0.0003      |
+|    loss                 | 5.21        |
+|    n_updates            | 30          |
+|    policy_gradient_loss | -0.0163     |
+|    value_loss           | 11          |
+-----------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    ep_len_mean          | 7.07        |
+|    ep_rew_mean          | 1.96        |
+| time/                   |             |
+|    fps                  | 20          |
+|    iterations           | 5           |
+|    time_elapsed         | 254         |
+|    total_timesteps      | 5120        |
+| train/                  |             |
+|    approx_kl            | 0.013514836 |
+|    clip_fraction        | 0.138       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -0.894      |
+|    explained_variance   | 0.037       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 6.64        |
+|    n_updates            | 40          |
+|    policy_gradient_loss | -0.011      |
+|    value_loss           | 11.3        |
+-----------------------------------------

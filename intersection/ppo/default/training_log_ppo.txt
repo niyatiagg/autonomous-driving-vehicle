@@ -1,0 +1,104 @@
+(cs272env) user1@LAPTOP-35REI65J:~/cs272/highway-env$ python ppo/ppo_train.py
+/home/user1/miniconda3/envs/cs272env/lib/python3.13/site-packages/gymnasium/envs/registration.py:512: DeprecationWarning: WARN: The environment intersection-v0 is out of date. You should consider upgrading to version `v1`.
+  logger.deprecation(
+/home/user1/miniconda3/envs/cs272env/lib/python3.13/site-packages/gymnasium/envs/registration.py:512: DeprecationWarning: WARN: The environment intersection-v0 is out of date. You should consider upgrading to version `v1`.
+  logger.deprecation(
+/home/user1/miniconda3/envs/cs272env/lib/python3.13/site-packages/gymnasium/envs/registration.py:512: DeprecationWarning: WARN: The environment intersection-v0 is out of date. You should consider upgrading to version `v1`.
+  logger.deprecation(
+/home/user1/miniconda3/envs/cs272env/lib/python3.13/site-packages/gymnasium/envs/registration.py:512: DeprecationWarning: WARN: The environment intersection-v0 is out of date. You should consider upgrading to version `v1`.
+  logger.deprecation(
+Using cpu device
+---------------------------------
+| rollout/           |          |
+|    ep_len_mean     | 9.39     |
+|    ep_rew_mean     | 0.69     |
+| time/              |          |
+|    fps             | 21       |
+|    iterations      | 1        |
+|    time_elapsed    | 47       |
+|    total_timesteps | 1024     |
+---------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    ep_len_mean          | 9.44        |
+|    ep_rew_mean          | 2           |
+| time/                   |             |
+|    fps                  | 21          |
+|    iterations           | 2           |
+|    time_elapsed         | 97          |
+|    total_timesteps      | 2048        |
+| train/                  |             |
+|    approx_kl            | 0.011346517 |
+|    clip_fraction        | 0.0989      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -1.09       |
+|    explained_variance   | -0.0229     |
+|    learning_rate        | 0.0003      |
+|    loss                 | 3.03        |
+|    n_updates            | 10          |
+|    policy_gradient_loss | -0.0135     |
+|    value_loss           | 5.98        |
+-----------------------------------------
+------------------------------------------
+| rollout/                |              |
+|    ep_len_mean          | 8.71         |
+|    ep_rew_mean          | 1.46         |
+| time/                   |              |
+|    fps                  | 21           |
+|    iterations           | 3            |
+|    time_elapsed         | 144          |
+|    total_timesteps      | 3072         |
+| train/                  |              |
+|    approx_kl            | 0.0120805465 |
+|    clip_fraction        | 0.136        |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -1.06        |
+|    explained_variance   | 0.0293       |
+|    learning_rate        | 0.0003       |
+|    loss                 | 3.74         |
+|    n_updates            | 20           |
+|    policy_gradient_loss | -0.0163      |
+|    value_loss           | 8.17         |
+------------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    ep_len_mean          | 8.7         |
+|    ep_rew_mean          | 2.54        |
+| time/                   |             |
+|    fps                  | 21          |
+|    iterations           | 4           |
+|    time_elapsed         | 191         |
+|    total_timesteps      | 4096        |
+| train/                  |             |
+|    approx_kl            | 0.009278467 |
+|    clip_fraction        | 0.0927      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -1.04       |
+|    explained_variance   | 0.084       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 4.9         |
+|    n_updates            | 30          |
+|    policy_gradient_loss | -0.0142     |
+|    value_loss           | 9.87        |
+-----------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    ep_len_mean          | 8.16        |
+|    ep_rew_mean          | 2.27        |
+| time/                   |             |
+|    fps                  | 21          |
+|    iterations           | 5           |
+|    time_elapsed         | 239         |
+|    total_timesteps      | 5120        |
+| train/                  |             |
+|    approx_kl            | 0.011307493 |
+|    clip_fraction        | 0.11        |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -1.01       |
+|    explained_variance   | 0.0741      |
+|    learning_rate        | 0.0003      |
+|    loss                 | 4.7         |
+|    n_updates            | 40          |
+|    policy_gradient_loss | -0.0156     |
+|    value_loss           | 10.5        |
+-----------------------------------------
