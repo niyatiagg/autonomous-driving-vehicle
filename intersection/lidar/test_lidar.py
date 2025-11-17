@@ -4,8 +4,12 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import SubprocVecEnv, VecFrameStack, DummyVecEnv
 import sys
 
-env_config = {"manual_control": True,
-        "action": {"type": "ContinuousAction"},
+env_config = {"manual_control": False,
+        "action": {
+            "type": "DiscreteMetaAction",
+            "longitudinal": True,
+            "lateral": False,
+            "target_speeds": [0, 4.5, 9],},
         "observation": {"type": "LidarObservation"}}
 
 def test(model: PPO):
