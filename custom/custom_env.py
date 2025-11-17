@@ -1,0 +1,144 @@
+import numpy as np
+import highway_env
+from highway_env import utils
+from highway_env.envs.common.abstract import AbstractEnv
+from highway_env.envs.common.action import Action
+from highway_env.road.road import Road, RoadNetwork
+from highway_env.utils import near_split
+from highway_env.vehicle.controller import ControlledVehicle
+from highway_env.vehicle.kinematics import Vehicle
+from highway_env.vehicle.behavior import LinearVehicle, IDMVehicle
+
+# A simple class for crashed vehicles to place as hazards
+class CrashedVehicle(Vehicle):
+        
+        def __init__(self, road: Road, position, heading=0):
+            super().__init__(road, position, heading, speed=0, predition_type="zero_steering")
+            self.crashed = True
+
+# A modified version of HighwayEnv 
+class AccidentEnv(AbstractEnv):
+
+    # TODO: Change reward values in config
+    @classmethod
+    def default_config(cls) -> dict:
+        config = super().default_config()
+        config.update(
+            {
+                "observation": {"type": "LidarObservation"},
+                "action": {
+                    "type": "DiscreteMetaAction",
+                },
+                "speed_limit": 30,
+                "vehicles_count": 10,
+                "controlled_vehicles": 1,
+                "initial_lane_id": 3,
+                "duration": 20,  # [s]
+                "ego_spacing": 2,
+                "vehicles_density": 1,
+                "collision_reward": -1,  # The reward received when colliding with a vehicle.
+                "right_lane_reward": 0.1,  # The reward received when driving on the right-most lanes, linearly mapped to
+                # zero for other lanes.
+                "high_speed_reward": 0.4,  # The reward received when driving at full speed, linearly mapped to zero for
+                # lower speeds according to config["reward_speed_range"].
+                "lane_change_reward": 0,  # The reward received at each lane change action.
+                "reward_speed_range": [10, 30],
+                "normalize_reward": True,
+                "offroad_terminal": False
+            }
+        )
+        return config
+
+    def _reset(self) -> None:
+        self._create_road()
+        self._create_vehicles()
+
+    def _create_road(self) -> None:
+        """Create a road composed of straight adjacent lanes, with a car accident halfway down its length."""
+        road_network = RoadNetwork.straight_road_network(4, length=1000, speed_limit=self.config["speed_limit"])
+        self.road = Road(network=road_network, record_history=self.config["show_trajectories"])
+
+        # Add crashed vehicles
+        right_lane = road_network.lanes_dict()[("0", "1", 3)]
+        crashed_vehicle_1 = CrashedVehicle(self.road, position=right_lane.position(500, -2), heading=45)
+        crashed_vehicle_2 = CrashedVehicle(self.road, position=right_lane.position(505, 0), heading=-45)
+        self.road.objects.append(crashed_vehicle_1)
+        self.road.objects.append(crashed_vehicle_2)
+
+    def _create_vehicles(self) -> None:
+        """Add the agent-controlled vehicle and the other vehicles to the road."""
+        self.controlled_vehicles = []
+        agent = Vehicle.create_random(
+            self.road,
+            speed=25.0,
+            lane_id=self.config["initial_lane_id"],
+            spacing=self.config["ego_spacing"],
+        )
+        agent = self.action_type.vehicle_class(
+            self.road, agent.position, agent.heading, agent.speed
+        )
+        self.controlled_vehicles.append(agent)
+        self.road.vehicles.append(agent)
+
+        for _ in range(self.config["vehicles_count"]):
+            vehicle = LinearVehicle.create_random(
+                self.road, spacing=1 / self.config["vehicles_density"]
+            )
+            vehicle.randomize_behavior()
+            self.road.vehicles.append(vehicle)
+
+    # TODO: Change from HighwayEnv's version
+    def _reward(self, action: Action) -> float:
+        """
+        The reward is defined to foster driving at high speed, on the rightmost lanes, and to avoid collisions.
+        :param action: the last action performed
+        :return: the corresponding reward
+        """
+        rewards = self._rewards(action)
+        reward = sum(
+            self.config.get(name, 0) * reward for name, reward in rewards.items()
+        )
+        if self.config["normalize_reward"]:
+            reward = utils.lmap(
+                reward,
+                [
+                    self.config["collision_reward"],
+                    self.config["high_speed_reward"] + self.config["right_lane_reward"],
+                ],
+                [0, 1],
+            )
+        reward *= rewards["on_road_reward"]
+        return reward
+
+    # TODO: Change from HighwayEnv's version
+    def _rewards(self, action: Action) -> dict[str, float]:
+        neighbours = self.road.network.all_side_lanes(self.vehicle.lane_index)
+        lane = (
+            self.vehicle.target_lane_index[2]
+            if isinstance(self.vehicle, ControlledVehicle)
+            else self.vehicle.lane_index[2]
+        )
+        # Use forward speed rather than speed, see https://github.com/eleurent/highway-env/issues/268
+        forward_speed = self.vehicle.speed * np.cos(self.vehicle.heading)
+        scaled_speed = utils.lmap(
+            forward_speed, self.config["reward_speed_range"], [0, 1]
+        )
+        return {
+            "collision_reward": float(self.vehicle.crashed),
+            "right_lane_reward": lane / max(len(neighbours) - 1, 1),
+            "high_speed_reward": np.clip(scaled_speed, 0, 1),
+            "on_road_reward": float(self.vehicle.on_road),
+        }
+
+    # TODO: Add a destination?
+    def _is_terminated(self) -> bool:
+        """The episode is over if the ego vehicle crashed."""
+        return (
+            self.vehicle.crashed
+            or (self.config["offroad_terminal"] and not self.vehicle.on_road)
+        )
+
+    def _is_truncated(self) -> bool:
+        """The episode is truncated if the time limit is reached."""
+        return self.time >= self.config["duration"]
+
