@@ -32,7 +32,7 @@ class AccidentEnv(AbstractEnv):
                 "speed_limit": 30,
                 "vehicles_count": 10,
                 "controlled_vehicles": 1,
-                "initial_lane_id": 3,
+                "initial_lane_id": None,
                 "duration": 20,  # [s]
                 "ego_spacing": 2,
                 "vehicles_density": 1,
@@ -58,10 +58,12 @@ class AccidentEnv(AbstractEnv):
         road_network = RoadNetwork.straight_road_network(4, length=1000, speed_limit=self.config["speed_limit"])
         self.road = Road(network=road_network, record_history=self.config["show_trajectories"])
 
-        # Add crashed vehicles
-        right_lane = road_network.lanes_dict()[("0", "1", 3)]
-        crashed_vehicle_1 = CrashedVehicle(self.road, position=right_lane.position(500, -2), heading=45)
-        crashed_vehicle_2 = CrashedVehicle(self.road, position=right_lane.position(505, 0), heading=-45)
+        # Randomly determine which lane to add crashed vehicles to
+        lane_index = self.road.np_random.choice([1, 2, 3])
+        self.crash_lane = road_network.lanes_dict()[("0", "1", lane_index)]
+
+        crashed_vehicle_1 = CrashedVehicle(self.road, position=self.crash_lane.position(500, -2), heading=45)
+        crashed_vehicle_2 = CrashedVehicle(self.road, position=self.crash_lane.position(505, 0), heading=-45)
         self.road.objects.append(crashed_vehicle_1)
         self.road.objects.append(crashed_vehicle_2)
 
