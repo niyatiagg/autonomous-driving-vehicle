@@ -59,8 +59,8 @@ class AccidentEnv(AbstractEnv):
         self.road = Road(network=road_network, record_history=self.config["show_trajectories"])
 
         # Randomly determine which lane to add crashed vehicles to
-        lane_index = self.road.np_random.choice([1, 2, 3])
-        self.crash_lane = road_network.lanes_dict()[("0", "1", lane_index)]
+        self.crash_lane_index = self.road.np_random.choice([1, 2, 3])
+        self.crash_lane = road_network.lanes_dict()[("0", "1", self.crash_lane_index)]
 
         crashed_vehicle_1 = CrashedVehicle(self.road, position=self.crash_lane.position(500, -2), heading=45)
         crashed_vehicle_2 = CrashedVehicle(self.road, position=self.crash_lane.position(505, 0), heading=-45)
@@ -81,6 +81,7 @@ class AccidentEnv(AbstractEnv):
         )
         self.controlled_vehicles.append(agent)
         self.road.vehicles.append(agent)
+        self.agent_vehicle = agent
 
         for _ in range(self.config["vehicles_count"]):
             vehicle = LinearVehicle.create_random(
@@ -125,11 +126,25 @@ class AccidentEnv(AbstractEnv):
         scaled_speed = utils.lmap(
             forward_speed, self.config["reward_speed_range"], [0, 1]
         )
+
+        # Penalty for being in the same lane(s) as the crash, close to the crash
+        reaction_reward = 0
+        if self.agent_vehicle.lane_index[2] == self.crash_lane_index or self.agent_vehicle.lane_index[2] == self.crash_lane_index - 1:
+            distance_from_crash = np.linalg.norm(self.agent_vehicle.position - self.road.objects[0].position)
+            reaction_reward = min(0, (distance_from_crash - 40) / 80)
+
+        # Penalty for tailgating
+        forward_vehicle, rear_vehicle = self.road.neighbour_vehicles(self.agent_vehicle, self.agent_vehicle.lane_index)
+        distance_from_forward_vehicle = np.linalg.norm(self.agent_vehicle.position - forward_vehicle.position)
+        tailgating_reward = min(0, distance_from_forward_vehicle - 10 / 20)
+
         return {
             "collision_reward": float(self.vehicle.crashed),
             "right_lane_reward": lane / max(len(neighbours) - 1, 1),
             "high_speed_reward": np.clip(scaled_speed, 0, 1),
             "on_road_reward": float(self.vehicle.on_road),
+            "reaction_reward": float(reaction_reward),
+            "tailgating_reward": float(tailgating_reward)
         }
 
     # TODO: Add a destination?
