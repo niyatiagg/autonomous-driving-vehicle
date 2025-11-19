@@ -90,7 +90,6 @@ class AccidentEnv(AbstractEnv):
             vehicle.randomize_behavior()
             self.road.vehicles.append(vehicle)
 
-    # TODO: Change from HighwayEnv's version
     def _reward(self, action: Action) -> float:
         """
         The reward is defined to foster driving at high speed, on the rightmost lanes, and to avoid collisions.
@@ -136,7 +135,7 @@ class AccidentEnv(AbstractEnv):
         # Penalty for tailgating
         forward_vehicle, rear_vehicle = self.road.neighbour_vehicles(self.agent_vehicle, self.agent_vehicle.lane_index)
         distance_from_forward_vehicle = np.linalg.norm(self.agent_vehicle.position - forward_vehicle.position)
-        tailgating_reward = min(0, distance_from_forward_vehicle - 10 / 20)
+        tailgating_reward = min(0, (distance_from_forward_vehicle - 10) / 20)
 
         return {
             "collision_reward": float(self.vehicle.crashed),
