@@ -42,6 +42,9 @@ class AccidentEnv(AbstractEnv):
                 "high_speed_reward": 0.4,  # The reward received when driving at full speed, linearly mapped to zero for
                 # lower speeds according to config["reward_speed_range"].
                 "lane_change_reward": 0,  # The reward received at each lane change action.
+                "reaction_reward": 0.2,      # mild penalty for being slow to react
+                "tailgating_reward": 0.3, # stronger penalty for following too close
+                "job_well_done_reward": 0.3,
                 "reward_speed_range": [10, 30],
                 "normalize_reward": True,
                 "offroad_terminal": False
@@ -125,6 +128,37 @@ class AccidentEnv(AbstractEnv):
         scaled_speed = utils.lmap(
             forward_speed, self.config["reward_speed_range"], [0, 1]
         )
+        # Adaptive speed scaling near the crash
+        speed_scale_min = 0.2 # minimum alpha
+        proximity_length = 30.0 # distance within which we reduce the speed reward; beyond this is clear
+        crash_buffer = 15.0 # padding for the crash zone
+
+        x_pos = float(self.agent_vehicle.position[0]) 
+
+        # Crash zone extents from the crashed objects
+        if self.road.objects:
+            x_object = [float(obj.position[0]) for obj in self.road.objects]
+            x_s = min(x_object) - crash_buffer
+            x_e = max(x_object) + crash_buffer
+        else:
+            x_s = x_e = None
+        
+        # When our agent is near the crash
+        if x_s is not None and x_e is not None and (self.agent_vehicle.lane_index[2] == self.crash_lane_index) and x_pos <= x_e:
+            # Distance to the start of the zone if agent is in the crash lane and the zone is ahead
+            d_ahead = max(0, x_s - x_pos)
+            alpha = speed_scale_min + (1.0 - speed_scale_min) * (d_ahead / proximity_length)
+            alpha = float(np.clip(alpha, speed_scale_min, 1.0))
+        else: # normal circumstances
+            alpha = 1.0
+
+        adapted_speed = alpha * np.clip(scaled_speed, 0, 1)
+
+        # Masking the right_lane_ reward when agent is near the hazard zone
+        if x_s is not None and (self.agent_vehicle.lane_index[2] == self.crash_lane_index) and x_pos <= x_e:
+            right_lane_value = 0.0
+        else:
+            right_lane_value = lane / max(len(neighbours) - 1, 1)
 
         # Penalty for being in the same lane(s) as the crash, close to the crash
         reaction_reward = 0
@@ -134,18 +168,20 @@ class AccidentEnv(AbstractEnv):
 
         # Penalty for tailgating
         forward_vehicle, rear_vehicle = self.road.neighbour_vehicles(self.agent_vehicle, self.agent_vehicle.lane_index)
-        distance_from_forward_vehicle = np.linalg.norm(self.agent_vehicle.position - forward_vehicle.position)
-        tailgating_reward = min(0, (distance_from_forward_vehicle - 10) / 20)
+        if forward_vehicle is not None:
+            distance_from_forward_vehicle = np.linalg.norm(self.agent_vehicle.position - forward_vehicle.position)
+            tailgating_reward = min(0, (distance_from_forward_vehicle - 10) / 20)
+        else:
+            tailgating_reward = 0.0
 
-        # Reward for job well done
+        # Reward for job well done - if agent is in the right-most lane and successfully avoided the crash
         is_right = self.agent_vehicle.lane_index == 3
-        s = self.agent_vehicle.lane.local_coordinates(self.agent_vehicle.position)
-        clearance_bonus = 0.3 if is_right and s > 510 else 0.0
+        clearance_bonus = 0.3 if is_right and self.agent_vehicle.position[0] > 510 else 0.0
 
         return {
             "collision_reward": float(self.vehicle.crashed),
-            "right_lane_reward": lane / max(len(neighbours) - 1, 1),
-            "high_speed_reward": np.clip(scaled_speed, 0, 1),
+            "right_lane_reward": float(right_lane_value),
+            "high_speed_reward": float(adapted_speed),
             "on_road_reward": float(self.vehicle.on_road),
             "reaction_reward": float(reaction_reward),
             "tailgating_reward": float(tailgating_reward),
