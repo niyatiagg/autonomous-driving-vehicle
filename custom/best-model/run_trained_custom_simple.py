@@ -8,7 +8,7 @@ from stable_baselines3 import PPO
 ENV_ID = "MyCustomEnv-v0"
 MODEL_PATH = "./models/ppo_custom_manual_tuned.zip"  # <- fixed as requested
 
-# Register your custom env once
+# Register custom env once
 try:
     gym.register(id=ENV_ID, entry_point="custom_env:AccidentEnv")
 except gym.error.RegistrationError:
@@ -17,7 +17,6 @@ except gym.error.RegistrationError:
 def run_video(episodes: int, video_dir: str, seed: int = 42, deterministic: bool = True):
     """Record MP4(s) of evaluation episodes (works on Colab)."""
     os.makedirs(video_dir, exist_ok=True)
-    # Must support rgb_array rendering for video recording
     env = gym.make(ENV_ID, render_mode="rgb_array")
     from gymnasium.wrappers import RecordVideo
     env = RecordVideo(
@@ -57,7 +56,6 @@ def run_live(episodes: int, seed: int = 42, deterministic: bool = True):
             ep_ret += reward
             ep_len += 1
             done = terminated or truncated
-            # human mode usually renders automatically; call render() just in case:
             env.render()
         print(f"[LIVE] Episode {ep+1}/{episodes} — return: {ep_ret:.2f}, length: {ep_len}")
 
