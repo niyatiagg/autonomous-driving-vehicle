@@ -1,0 +1,10 @@
+{
+  "learning_rate": 4.059611610484306e-05,
+  "n_steps": 2304,
+  "batch_size": 128,
+  "gamma": 0.9642702278697041,
+  "gae_lambda": 0.9550667605250142,
+  "clip_range": 0.14184815819561256,
+  "n_layers": 1,
+  "layer_size": 128
+}
