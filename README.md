@@ -1,4 +1,4 @@
-# CS272 Final Project — Autonomous Driving with Deep RL (HighwayEnv + Custom Accident Env)
+# Autonomous Driving with Deep RL (HighwayEnv + Custom Accident Env)
 
 This project trains and evaluates Deep Reinforcement Learning (DRL) agents for autonomous driving tasks using **HighwayEnv** and a **custom accident-avoidance environment**. We compare multiple on-policy algorithms (A2C, PPO, TRPO), perform hyperparameter tuning with **Optuna**, and report results using learning curves and deterministic performance tests.
 
