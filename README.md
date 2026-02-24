@@ -58,7 +58,7 @@ For each environment + observation setup we generate:
 2. **Deterministic Performance Test (500 episodes)**  
    Violin plot of episodic returns using `deterministic=True`
 
-Total expected plots:
+Total plots:
 - **3 environments × 2 observation types × 2 plots = 12 plots**
 
 ---
